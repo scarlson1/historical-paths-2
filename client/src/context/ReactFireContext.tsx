@@ -51,7 +51,10 @@ export function ReactFireServicesContext({ children }: { children: ReactNode }) 
   // ); // don't wait to load
 
   useEffect(() => {
-    if (import.meta.env.VITE_EMULATORS === 'true') {
+    // if (import.meta.env.VITE_EMULATORS === 'true') {
+    // TODO: decide variable to check here (import.meta.env.MODE === 'dev' ??)
+    // delete VITE_EMULATORS env var ??
+    if (import.meta.env.DEV) {
       console.log('USING FIREBASE AUTH, FIRESTORE, FUNCTIONS, STORAGE EMULATORS');
       connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
       // connectFirestoreEmulator(firestore, 'localhost', 8082);

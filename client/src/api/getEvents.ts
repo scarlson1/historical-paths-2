@@ -9,4 +9,4 @@ export interface GetEventsResponse {
 }
 
 export const getEvents = (functions: Functions, args: GetEventsRequest) =>
-  httpsCallable<GetEventsRequest, GetEventsResponse>(functions, 'events')(args);
+  httpsCallable<GetEventsRequest, GetEventsResponse>(functions, 'eventsv2')(args);
