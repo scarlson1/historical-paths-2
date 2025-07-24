@@ -30,7 +30,8 @@ export interface InitialEvent extends EventProfile {
   track: TrackDataPoint[];
 }
 
-export interface InitialEventFix extends Omit<InitialEvent, 'year' | 'category'> {
+export interface InitialEventFix
+  extends Omit<InitialEvent, 'year' | 'category'> {
   year: number;
   category: number;
 }
@@ -45,4 +46,23 @@ export interface EventYears {
   ts: number[];
   h: number[];
   mh: number[];
+}
+
+export interface EventRow {
+  basin: string;
+  category: number;
+  geography: string;
+  geometry: string;
+  iso_time: string;
+  latitude: string | number;
+  longitude: string | number;
+  name: string;
+  nature: string;
+  point_id: string;
+  season: string;
+  sid: string;
+  timestamp: any;
+  usa_sshs: string;
+  usa_status: string;
+  year: number;
 }

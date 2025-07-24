@@ -10,13 +10,15 @@ import {
   Slide,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 import { useFilterStore } from 'context';
 import { usePaths } from 'hooks';
+import { ErrorBoundary } from 'react-error-boundary';
 import { MAX_YEAR, MIN_YEAR } from '../constants';
 import { CategoryCount } from './CategoryCount';
 import { EventList } from './EventList';
+import { LastEventDate } from './LastEventDate';
 import { RangeFilter } from './RangeFilter';
 
 // combine paths hook with filters ??
@@ -82,7 +84,10 @@ export const EventsSummary = ({ hasLocation }: { hasLocation: boolean }) => {
                   <Box sx={{ display: { xs: 'none', sm: 'block' } }}></Box>
                 </Box>
                 <Box flex={0} sx={{ pb: { xs: 2, md: 4 } }}>
-                  <CategoryCount eventYears={data?.eventYears} yearRange={yearRange} />
+                  <CategoryCount
+                    eventYears={data?.eventYears}
+                    yearRange={yearRange}
+                  />
                 </Box>
                 <Box
                   flex={1}
@@ -108,20 +113,46 @@ export const EventsSummary = ({ hasLocation }: { hasLocation: boolean }) => {
                   }}
                 >
                   {isLoading && !data ? <EventListLoading count={5} /> : null}
-                  {data ? <EventList eventProfiles={data.events} yearRange={yearRange} /> : null}
+                  {data ? (
+                    <EventList
+                      eventProfiles={data.events}
+                      yearRange={yearRange}
+                    />
+                  ) : null}
                 </Box>
                 <Box flex={0}>
                   <Divider sx={{ my: 2 }} />
-                  <Typography id='range-slider' align='center' variant='overline' gutterBottom>
+                  <Typography
+                    id='range-slider'
+                    align='center'
+                    variant='overline'
+                    gutterBottom
+                  >
                     Year Range
                   </Typography>
-                  {/* <Box sx={{ pr: 2, pl: 1 }}> */}
                   <Box
-                    sx={{ px: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                    sx={{
+                      px: 1,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
                   >
-                    <RangeFilter field='yearRange' min={MIN_YEAR} max={MAX_YEAR} />
+                    <RangeFilter
+                      field='yearRange'
+                      min={MIN_YEAR}
+                      max={MAX_YEAR}
+                    />
                   </Box>
                 </Box>
+
+                <ErrorBoundary fallback={null}>
+                  <Suspense>
+                    <LastEventDate
+                      sx={{ fontSize: '10px', mt: { xs: -2, sm: 0 } }}
+                    />
+                  </Suspense>
+                </ErrorBoundary>
               </Box>
             </Card>
           </Box>

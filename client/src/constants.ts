@@ -1,3 +1,4 @@
-// TODO: move to env vars
-export const MIN_YEAR = 1974;
-export const MAX_YEAR = 2023;
+const currentYear = new Date().getFullYear();
+
+export const MIN_YEAR = currentYear - 49; // 1974;
+export const MAX_YEAR = currentYear; // 2023

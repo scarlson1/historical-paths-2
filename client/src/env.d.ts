@@ -13,14 +13,6 @@ interface ImportMetaEnv {
   readonly VITE_FB_MESSAGING_SENDER_ID: string;
   readonly VITE_FB_APP_ID: string;
   readonly VITE_FB_MEASUREMENT_ID: string;
-  // readonly VITE_EPAY_BASE_URL: string;
-  // readonly VITE_EPAY_HOSTING_BASE_URL: string;
-  // readonly VITE_EPAY_PUBLIC_KEY: string;
-  // readonly VITE_ALGOLIA_APP_ID: string;
-  // readonly VITE_ALGOLIA_NOT_AUTHED_SEARCH_KEY: string;
-  // readonly VITE_DEV: string;
-  // readonly VITE_RECAPTCHA_ENTERPRISE_KEY: string;
-  // readonly VITE_STRIPE_PUBLISHABLE_KEY: string;
 }
 
 interface ImportMeta {

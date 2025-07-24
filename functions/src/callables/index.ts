@@ -5,10 +5,9 @@ export const eventsv2 = onCall({ secrets: [dbPassword] }, async (request) => {
   return (await import('./events.js')).default(request);
 });
 
-// export const testfn = onCall(
-//   { cors: [/firebase\.com$/, 'localhost:5000', 'localhost:3000'] }, // cors: [/yourdomain\.com$/, 'yourdomain.com'],
-//   async (request) => {
-//     console.log('importing testfn func...');
-//     return (await import('./testfn.js')).default(request);
-//   }
-// );
+export const getlasteventdate = onCall(
+  { secrets: [dbPassword] },
+  async (request) => {
+    return (await import('./getLastEventDate.js')).default(request);
+  }
+);

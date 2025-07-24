@@ -11,7 +11,7 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "emulators:dev": "firebase emulators:start --only functions,auth",
-    "setSAPath": "export GOOGLE_APPLICATION_CREDENTIALS=\"/Users/spencercarlson/code/historical-paths-firebase-admin.json\"",
+    "setSAPath": "export GOOGLE_APPLICATION_CREDENTIALS=\"/Users/spencercarlson/Documents/dev/service_accounts/historical-paths-admin.json\"",
     "dev": "concurrently \"npm run setSAPath\" \"npm run emulators:dev\"  \"npm run build:watch\"",
     "dev:old": "npm run setSAPath && npm run emulators:dev && npm run build:watch"
   },

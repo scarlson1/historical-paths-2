@@ -11,13 +11,20 @@ import {
   ScatterplotLayerProps,
 } from 'deck.gl';
 import { capitalize } from 'lodash';
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Marker } from 'react-map-gl';
 
 import { DeckMap } from 'components';
-import { DeckMapProps } from 'components/DeckMap';
 import { DEFAULT_INITIAL_VIEW_STATE } from 'components/constants';
+import { DeckMapProps } from 'components/DeckMap';
 import { useFilterStore, useLocationStore } from 'context';
 import { Controls, EventsSummary, Search } from 'elements';
 import { useAsyncToast, usePaths } from 'hooks';
@@ -124,7 +131,9 @@ interface MapProps extends DeckMapProps {
 export const Map = ({ children, ...props }: MapProps) => {
   const { palette } = useTheme();
   const mapLoaded = useRef<boolean>(false);
-  const [initialViewState, setInitialViewState] = useState(DEFAULT_INITIAL_VIEW_STATE);
+  const [initialViewState, setInitialViewState] = useState(
+    DEFAULT_INITIAL_VIEW_STATE
+  );
   const [hoverInfo, setHoverInfo] = useState<PickingInfo>();
   const [clickCount, setClickCount] = useState(0);
   const toast = useAsyncToast({ position: 'top-center' });
@@ -160,7 +169,9 @@ export const Map = ({ children, ...props }: MapProps) => {
     if (markerMode) {
       updateCoords({ latitude: coordinate[1], longitude: coordinate[0] });
     } else if (clickCount % 3 === 0) {
-      toast.info('use control in bottom corner to set a new location.', { id: 'marker-mode-info' });
+      toast.info('use control in bottom corner to set a new location.', {
+        id: 'marker-mode-info',
+      });
     }
     setClickCount(clickCount + 1);
   };
@@ -177,7 +188,10 @@ export const Map = ({ children, ...props }: MapProps) => {
     });
   }, []);
 
-  const markerArr = useMemo(() => data?.events.map(({ track }) => track).flat(), [data]);
+  const markerArr = useMemo(
+    () => data?.events.map(({ track }) => track).flat(),
+    [data]
+  );
 
   const layers = [
     new ScatterplotLayer({
@@ -251,7 +265,9 @@ export const Map = ({ children, ...props }: MapProps) => {
         }}
       >
         <ErrorBoundary fallback={<div>something went wrong</div>}>
-          <Suspense fallback={<Skeleton variant='rounded' width={276} height={40} />}>
+          <Suspense
+            fallback={<Skeleton variant='rounded' width={276} height={40} />}
+          >
             <Search />
           </Suspense>
         </ErrorBoundary>
@@ -295,7 +311,9 @@ export const Map = ({ children, ...props }: MapProps) => {
         onLoad={() => (mapLoaded.current = true)}
         onError={console.error}
         hoverInfo={hoverInfo}
-        renderTooltipContent={(info) => <Typography>{capitalize(info.object?.name)}</Typography>}
+        renderTooltipContent={(info) => (
+          <Typography>{capitalize(info.object?.name)}</Typography>
+        )}
       >
         {children}
         {coords && (

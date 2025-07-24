@@ -27,10 +27,6 @@ export function CategoryCount({
   eventYears?: GetEventsResponse['eventYears'];
   yearRange: number[];
 }) {
-  // const coords = useLocationStore((state) => state.coordinates);
-  // const isFetching = useIsFetching({ queryKey: ['paths', coords] });
-  // if (!eventYears) return null;
-
   const { categoryTotals, totalCount } = useMemo(() => {
     if (!eventYears) {
       return {
@@ -42,7 +38,9 @@ export function CategoryCount({
     const categoryTotals = reduce<EventYears, any>(
       eventYears,
       (result, value, key) => {
-        result[key] = value.filter((year) => year >= yearRange[0] && year <= yearRange[1]).length;
+        result[key] = value.filter(
+          (year) => year >= yearRange[0] && year <= yearRange[1]
+        ).length;
         return result;
       },
       {}
@@ -61,7 +59,11 @@ export function CategoryCount({
             <Typography textAlign='left' noWrap>{`${label}:`}</Typography>
           </Grid>
           <Grid xs={3}>
-            <Typography variant='body1' fontWeight='fontWeightBold' textAlign='right'>
+            <Typography
+              variant='body1'
+              fontWeight='fontWeightBold'
+              textAlign='right'
+            >
               {categoryTotals[yearKey] ?? '--'}
             </Typography>
           </Grid>
@@ -76,7 +78,11 @@ export function CategoryCount({
         </Typography>
       </Grid>
       <Grid xs={3}>
-        <Typography variant='body1' fontWeight='fontWeightBold' textAlign='right'>
+        <Typography
+          variant='body1'
+          fontWeight='fontWeightBold'
+          textAlign='right'
+        >
           {totalCount ?? '--'}
         </Typography>
       </Grid>

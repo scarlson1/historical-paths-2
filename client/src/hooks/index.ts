@@ -5,6 +5,7 @@ export { useCounter } from './useCounter';
 export { useDebounce } from './useDebounce';
 export { useInterval } from './useInterval';
 export { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+export * from './useLastEventDate';
 export { useLocalStorage } from './useLocalStorage';
 export { useMapsJSLoader } from './useMapsJSLoader';
 export { usePaths } from './usePaths';
