@@ -212,7 +212,7 @@ export const EventsSummary = ({ hasLocation }: { hasLocation: boolean }) => {
 };
 
 function EventListLoading({ count = 5 }: { count?: number }) {
-  let arr = new Array(count).fill(null);
+  const arr = new Array(count).fill(null);
 
   return (
     <List>

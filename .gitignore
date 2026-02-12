@@ -64,9 +64,10 @@ node_modules/
 
 # dotenv environment variables file
 .env
+.env.local
+client/.env.prod
 
 *build/
 *dist/
 
 *.local
-.env*

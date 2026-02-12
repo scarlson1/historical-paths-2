@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "historical-paths"
+    "default": "historical-paths",
+    "dev": "historical-paths"
+    "prod": "historical-paths"
   }
 }
