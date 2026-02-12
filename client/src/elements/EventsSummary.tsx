@@ -20,7 +20,7 @@ import { CategoryCount } from './CategoryCount';
 import { EventList } from './EventList';
 import { LastEventDate } from './LastEventDate';
 import { RangeFilter } from './RangeFilter';
-
+// .
 // combine paths hook with filters ??
 // useEffect to update zustand any time filter changes ??
 // or store filtered data in the filter store ?? update in zustand action handler ??
