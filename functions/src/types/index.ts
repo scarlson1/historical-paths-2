@@ -21,17 +21,15 @@ export interface TrackDataPoint {
 }
 
 export interface InitialEvent extends EventProfile {
-  // name: string;
-  // year: number;
-  // id: string;
-  // category: number;
   triggerCategory?: number;
   path: Coordinate[];
   track: TrackDataPoint[];
 }
 
-export interface InitialEventFix
-  extends Omit<InitialEvent, 'year' | 'category'> {
+export interface InitialEventFix extends Omit<
+  InitialEvent,
+  'year' | 'category'
+> {
   year: number;
   category: number;
 }
