@@ -1,4 +1,4 @@
-import { QueryClient } from '@tanstack/react-query';
+import type { QueryClient } from '@tanstack/react-query';
 import { createRootRouteWithContext, createRoute, createRouter } from '@tanstack/react-router';
 
 import { locationValues, queryClient } from 'context';

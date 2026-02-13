@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useFunctions } from 'reactfire';
 
-import { GetEventsResponse, getEvents } from 'api';
+import { getEvents } from 'api';
+import type { GetEventsResponse } from 'api';
 import { useLocationStore } from 'context';
 
 // TODO: use suspense hook or onError

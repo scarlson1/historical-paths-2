@@ -2,8 +2,8 @@ import { Divider, Unstable_Grid2 as Grid, Typography } from '@mui/material';
 import { reduce, sum } from 'lodash';
 import { Fragment, useMemo } from 'react';
 
-import { GetEventsResponse } from 'api';
-import { EventYears } from 'types';
+import type { GetEventsResponse } from 'api';
+import type { EventYears } from 'types';
 
 const categorySummary: { label: string; yearKey: keyof EventYears }[] = [
   {

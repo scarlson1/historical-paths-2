@@ -1,8 +1,9 @@
 import { z } from 'zod';
 import { create } from 'zustand';
-import { StateStorage, createJSONStorage, persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import type { StateStorage } from 'zustand/middleware';
 
-import { Coordinates } from 'types';
+import type { Coordinates } from 'types';
 import { getProxyCircles } from 'utils';
 
 // include marker mode state ?? or separate store ?? (click count, marker mode, etc.);

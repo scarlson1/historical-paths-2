@@ -1,16 +1,16 @@
 // TODO: move to query ??
 
-import { EventYears, InitialEventFix } from '../types/index.js';
+import type { EventYears, InitialEventFix } from '../types/index.js';
 
 export function formatEventsSummary(events: InitialEventFix[]) {
-  let obj: EventYears = {
+  const obj: EventYears = {
     ts: [],
     h: [],
     mh: [],
   };
 
-  for (let event of events) {
-    let cat = typeof event.category === 'string' ? parseInt(event.category) : event.category;
+  for (const event of events) {
+    const cat = typeof event.category === 'string' ? parseInt(event.category) : event.category;
     switch (cat) {
       case 0:
         obj.ts.push(event.year);

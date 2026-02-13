@@ -1,5 +1,6 @@
 import { EditLocationAltRounded, LocationDisabledRounded } from '@mui/icons-material';
-import { Button, ButtonProps } from '@mui/material';
+import { Button } from '@mui/material';
+import type { ButtonProps } from '@mui/material';
 
 import { useLocationStore } from 'context';
 

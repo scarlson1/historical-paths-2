@@ -2,16 +2,16 @@ import { CloseRounded } from '@mui/icons-material';
 import {
   Box,
   CircularProgress,
-  CircularProgressProps,
   IconButton,
   LinearProgress,
-  LinearProgressProps,
   keyframes,
   linearProgressClasses,
   styled,
 } from '@mui/material';
+import type { CircularProgressProps, LinearProgressProps } from '@mui/material';
 import { useCallback, useEffect } from 'react';
-import { Toast, toast, useToasterStore } from 'react-hot-toast';
+import { toast, useToasterStore } from 'react-hot-toast';
+import type { Toast } from 'react-hot-toast';
 import { useSwipeable } from 'react-swipeable';
 
 import { useCountdown } from 'hooks';

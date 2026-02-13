@@ -9,7 +9,8 @@ import {
   Typography,
 } from '@mui/material';
 import parse from 'autosuggest-highlight/parse';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { SyntheticEvent } from 'react';
 import toast from 'react-hot-toast';
 
 import { useLocationStore } from 'context';

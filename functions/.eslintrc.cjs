@@ -1,30 +1,42 @@
+const path = require('path');
+
 module.exports = {
   root: true,
   env: {
-    es6: true,
+    es2022: true,
     node: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:import/typescript',
-    'google',
-    'plugin:@typescript-eslint/recommended',
-  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: ['tsconfig.json', 'tsconfig.dev.json'],
+    ecmaVersion: 2022,
     sourceType: 'module',
+    tsconfigRootDir: __dirname,
+    project: [
+      path.join(__dirname, 'tsconfig.json'),
+      path.join(__dirname, 'tsconfig.dev.json'),
+    ],
   },
-  ignorePatterns: [
-    '/lib/**/*', // Ignore built files.
-    '/dist/**/*', // Ignore built files.
-  ],
+  ignorePatterns: ['dist/**', 'lib/**', '.eslintrc.cjs'],
   plugins: ['@typescript-eslint', 'import'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+  ],
   rules: {
-    quotes: ['error', 'double'],
-    'import/no-unresolved': 0,
-    indent: ['error', 2],
+    'no-unused-vars': 'off',
+    quotes: ['warn', 'single', { avoidEscape: true }],
+    indent: ['error', 2, { SwitchCase: 1 }],
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    ],
+    '@typescript-eslint/consistent-type-imports': [
+      'warn',
+      { prefer: 'type-imports' },
+    ],
+    '@typescript-eslint/no-explicit-any': 'warn',
+    'import/no-unresolved': 'off',
   },
 };

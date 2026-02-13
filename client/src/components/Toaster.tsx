@@ -1,11 +1,7 @@
 import { useTheme } from '@mui/material';
 import { useMemo } from 'react';
-import {
-  DefaultToastOptions,
-  Toaster as HotToaster,
-  ToastBar,
-  ToastOptions,
-} from 'react-hot-toast';
+import { Toaster as HotToaster, ToastBar } from 'react-hot-toast';
+import type { DefaultToastOptions, ToastOptions } from 'react-hot-toast';
 import { CustomToast } from './CustomToast';
 
 // TODO: extend types

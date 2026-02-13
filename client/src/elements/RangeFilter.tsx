@@ -1,5 +1,7 @@
-import { Slider, SliderProps } from '@mui/material';
-import { SyntheticEvent, useCallback, useState } from 'react';
+import { Slider } from '@mui/material';
+import type { SliderProps } from '@mui/material';
+import { useCallback, useState } from 'react';
+import type { SyntheticEvent } from 'react';
 
 import { FilterValues, FilterValuesZ, useFilterStore } from 'context';
 

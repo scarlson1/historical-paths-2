@@ -1,4 +1,4 @@
-import { Color } from 'deck.gl';
+import type { Color } from 'deck.gl';
 
 export function hexToRgbObj(hex: string) {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")

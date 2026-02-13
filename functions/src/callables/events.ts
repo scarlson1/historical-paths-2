@@ -1,4 +1,5 @@
-import { CallableRequest, HttpsError } from 'firebase-functions/v2/https';
+import type { CallableRequest } from 'firebase-functions/v2/https';
+import { HttpsError } from 'firebase-functions/v2/https';
 import { getDB } from '../lib/db.js';
 import {
   addTriggerCategory,
@@ -7,7 +8,11 @@ import {
   isValidCoords,
   validate,
 } from '../lib/index.js';
-import { EventYears, InitialEvent, InitialEventFix } from '../types/index.js';
+import type {
+  EventYears,
+  InitialEvent,
+  InitialEventFix,
+} from '../types/index.js';
 
 interface EventsRequest {
   latitude: number;
@@ -35,20 +40,20 @@ const events = async ({ data }: CallableRequest<EventsRequest>) => {
     // });
 
     // temp fix: query returns years and category as strings
-    let numberFixEvents = rows.map((e) => ({
+    const numberFixEvents = rows.map((e) => ({
       ...e,
       category: parseInt(e.category),
       year: parseInt(e.year),
     }));
-    let newEvents: InitialEventFix[] = addTriggerCategory(numberFixEvents, [
+    const newEvents: InitialEventFix[] = addTriggerCategory(numberFixEvents, [
       longitude,
       latitude,
     ]);
-    let summaryData: EventYears = formatEventsSummary(numberFixEvents);
+    const summaryData: EventYears = formatEventsSummary(numberFixEvents);
     // let costByYear = createCostByYear(newEvents, [1972, 2021]);
     // let chartData = formatTableData(costByYear);
 
-    let responseData = {
+    const responseData = {
       // : ResponseData
       events: newEvents,
       eventYears: summaryData,
@@ -79,7 +84,8 @@ const getQueryString = ({ lat, lng }: { lat: number; lng: number }) => {
     "WITH hurricanes AS ( SELECT MIN(name) as name, CAST(MIN(season) AS int) as year, MIN(sid) as id, MAX(usa_sshs) as category, ARRAY_AGG(json_build_object('coordinates', array[longitude, latitude], 'datetime', TO_CHAR(timestamp, 'Mon FMDD, YYYY FMHH:MI am'), 'category', usa_sshs, 'id', sid, 'point_id', point_id, 'name', name, 'year', season)";
   queryString += ' ORDER BY iso_time ASC) AS track';
   // queryString += `, ARRAY_AGG(array[longitude, latitude] ORDER BY iso_time ASC) as path`;
-  queryString += `, ARRAY_AGG(JSON_BUILD_ARRAY(longitude, latitude) ORDER BY iso_time ASC) AS path`;
+  queryString +=
+    ', ARRAY_AGG(JSON_BUILD_ARRAY(longitude, latitude) ORDER BY iso_time ASC) AS path';
   queryString += ' FROM hurricane_data';
 
   // Tropical storms within 50 radius

@@ -1,6 +1,7 @@
 import { InfoRounded, WarningAmberRounded } from '@mui/icons-material';
 import { useCallback, useMemo, useRef } from 'react';
-import { ToastOptions, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
+import type { ToastOptions } from 'react-hot-toast';
 
 export const useAsyncToast = (defOptions?: ToastOptions) => {
   const toastRef = useRef<string>('');

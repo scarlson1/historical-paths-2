@@ -4,8 +4,10 @@ import {
   LightModeRounded,
   SatelliteAltRounded,
 } from '@mui/icons-material';
-import { ToggleButton, ToggleButtonGroup, ToggleButtonGroupProps, Tooltip } from '@mui/material';
-import { ReactElement, useCallback, useMemo } from 'react';
+import { ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
+import type { ToggleButtonGroupProps } from '@mui/material';
+import { useCallback, useMemo } from 'react';
+import type { MouseEvent, ReactElement } from 'react';
 import { useMap } from 'react-map-gl';
 
 import { useLocalStorage } from 'hooks';
@@ -33,7 +35,7 @@ export const useMapboxStyleControl = (
   const [style, setStyle] = usePreferredMapStyle(initial);
 
   const handleChange = useCallback(
-    (_: React.MouseEvent<HTMLElement>, newVal: string) => {
+    (_: MouseEvent<HTMLElement>, newVal: string) => {
       if (newVal) {
         setStyle(newVal);
         map?.getMap().setStyle(newVal, { diff: true });

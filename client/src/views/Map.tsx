@@ -1,15 +1,13 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
 import { GpsFixedRounded } from '@mui/icons-material';
-import { Box, Skeleton, Typography, useTheme } from '@mui/material';
-import {
-  FlyToInterpolator,
-  PathLayer,
+import { Box, Skeleton, Stack, Typography, useTheme } from '@mui/material';
+import type {
   PathLayerProps,
   PickingInfo,
   Position,
-  ScatterplotLayer,
   ScatterplotLayerProps,
 } from 'deck.gl';
+import { FlyToInterpolator, PathLayer, ScatterplotLayer } from 'deck.gl';
 import { capitalize } from 'lodash';
 import {
   Suspense,
@@ -24,12 +22,12 @@ import { Marker } from 'react-map-gl';
 
 import { DeckMap } from 'components';
 import { DEFAULT_INITIAL_VIEW_STATE } from 'components/constants';
-import { DeckMapProps } from 'components/DeckMap';
+import type { DeckMapProps } from 'components/DeckMap';
 import { useFilterStore, useLocationStore } from 'context';
 import { Controls, EventsSummary, Search } from 'elements';
 import { useAsyncToast, usePaths } from 'hooks';
-import { Coordinates, InitialEvent, TrackDataPoint } from 'types';
-import { ProxyCircle } from 'utils';
+import type { Coordinates, InitialEvent, TrackDataPoint } from 'types';
+import type { ProxyCircle } from 'utils';
 
 // separate components (Map) - pass layers as prop, marker as child ??
 // use action/reducer/context to manage layer state (or zustand) ??
@@ -41,7 +39,7 @@ import { ProxyCircle } from 'utils';
 // if using multiple map layers --> use context/zustand to manage state (enabled layers, etc.)
 // enable visibility of layers and RQ hooks from context ??
 
-let pathsProps: Partial<PathLayerProps> = {
+const pathsProps: Partial<PathLayerProps> = {
   pickable: true,
   // autoHighlight: true,
   // highlightColor: [255, 101, 80, 200],
@@ -54,7 +52,7 @@ let pathsProps: Partial<PathLayerProps> = {
   getWidth: () => 8,
 };
 
-let markersProps: Partial<ScatterplotLayerProps> = {
+const markersProps: Partial<ScatterplotLayerProps> = {
   pickable: true,
   autoHighlight: true,
   stroked: true,
@@ -101,7 +99,7 @@ let markersProps: Partial<ScatterplotLayerProps> = {
   },
 };
 
-let proxyCircleProps: Partial<ScatterplotLayerProps<ProxyCircle>> = {
+const proxyCircleProps: Partial<ScatterplotLayerProps<ProxyCircle>> = {
   // pickable: true,
   // autoHighlight: true,
   // highlightColor: [0, 0, 0, 10],
@@ -132,7 +130,7 @@ export const Map = ({ children, ...props }: MapProps) => {
   const { palette } = useTheme();
   const mapLoaded = useRef<boolean>(false);
   const [initialViewState, setInitialViewState] = useState(
-    DEFAULT_INITIAL_VIEW_STATE
+    DEFAULT_INITIAL_VIEW_STATE,
   );
   const [hoverInfo, setHoverInfo] = useState<PickingInfo>();
   const [clickCount, setClickCount] = useState(0);
@@ -150,12 +148,6 @@ export const Map = ({ children, ...props }: MapProps) => {
   const yearRange = useFilterStore((state) => state.yearRange);
 
   const { data } = usePaths();
-  // const { isSmall } = useWidth();
-
-  // const mapStyleOptions = useMemo(
-  //   () => (isSmall ? MOBILE_DEFAULT_MAP_STYLE_OPTIONS : DEFAULT_MAP_STYLE_OPTIONS),
-  //   [isSmall]
-  // );
 
   useEffect(() => {
     // need to compare to previous ??
@@ -190,7 +182,7 @@ export const Map = ({ children, ...props }: MapProps) => {
 
   const markerArr = useMemo(
     () => data?.events.map(({ track }) => track).flat(),
-    [data]
+    [data],
   );
 
   const layers = [
@@ -208,9 +200,9 @@ export const Map = ({ children, ...props }: MapProps) => {
     new PathLayer({
       id: 'paths-layer',
       data: data?.events || [],
-      getColor: palette.mode === 'dark' ? [180, 180, 180, 255] : [0, 0, 0, 255], // [211, 211, 211, 255]
+      getColor: palette.mode === 'dark' ? [180, 180, 180, 255] : [0, 0, 0, 255],
       highlightedObjectIndex: highlightedIndex,
-      // @ts-ignore
+      // @ts-expect-error deckGL bug ??
       onHover: (info) => {
         setHoverInfo(info);
         setHighlightedIndex(info.index);
@@ -240,6 +232,55 @@ export const Map = ({ children, ...props }: MapProps) => {
       extensions: [new DataFilterExtension({ filterSize: 1 })],
     }),
   ];
+
+  const getTooltip = useCallback(
+    ({ object }: PickingInfo<TrackDataPoint & { details?: string }>) => {
+      if (!object?.name) return null;
+
+      return (
+        <Box sx={{ maxWidth: 280, whiteSpace: 'normal' }}>
+          <Stack direction='column' spacing={0.5}>
+            <Stack
+              direction='row'
+              spacing={1}
+              sx={{ justifyContent: 'space-between', minWidth: 0 }}
+            >
+              {object.year ? (
+                <Typography
+                  variant='body2'
+                  color='textSecondary'
+                  fontSize='0.775rem'
+                >
+                  {object.year}
+                </Typography>
+              ) : null}
+              {object.category ? (
+                <Typography
+                  variant='body2'
+                  color='textSecondary'
+                  fontSize='0.775rem'
+                >
+                  {object.category}
+                </Typography>
+              ) : null}
+              {object.details ? (
+                <Typography
+                  variant='body2'
+                  color='textSecondary'
+                  fontSize='0.775rem'
+                  sx={{ minWidth: 0, flex: '1 1 auto' }}
+                >
+                  {object.details}
+                </Typography>
+              ) : null}
+            </Stack>
+            <Typography>{capitalize(object.name)}</Typography>
+          </Stack>
+        </Box>
+      );
+    },
+    [],
+  );
 
   return (
     <Box
@@ -277,31 +318,9 @@ export const Map = ({ children, ...props }: MapProps) => {
 
       <Box sx={{ position: 'absolute', right: 8, bottom: 24, zIndex: 10 }}>
         <Controls />
-        {/* <Stack spacing={1} direction='column' alignItems='flex-end'>
-          <MarkerModeButton />
-          <Button
-            onClick={handleReset}
-            aria-label='toggle cursor mode'
-            // size='small'
-            variant='contained'
-            color='inherit'
-            disabled={!coords}
-            sx={{
-              mx: 1,
-              maxHeight: 30,
-              minWidth: 34,
-              maxWidth: 40,
-              m: 0.5,
-            }}
-          >
-            <WrongLocationRounded fontSize='small' />
-          </Button>
-        </Stack> */}
-        {/* <MapStyleControl initStyle='' color='standard' /> */}
       </Box>
 
       <DeckMap
-        // initialViewState={DEFAULT_INITIAL_VIEW_STATE}
         initialViewState={initialViewState}
         {...props}
         onClick={handleClick}
@@ -311,9 +330,7 @@ export const Map = ({ children, ...props }: MapProps) => {
         onLoad={() => (mapLoaded.current = true)}
         onError={console.error}
         hoverInfo={hoverInfo}
-        renderTooltipContent={(info) => (
-          <Typography>{capitalize(info.object?.name)}</Typography>
-        )}
+        renderTooltipContent={getTooltip}
       >
         {children}
         {coords && (

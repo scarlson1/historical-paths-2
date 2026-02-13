@@ -2,7 +2,8 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeButton } from 'elements';
 import { Suspense } from 'react';
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
+import type { FallbackProps } from 'react-error-boundary';
 import { Toaster } from 'react-hot-toast';
 
 import { LoadingSpinner, RQLoadingIndicator } from 'components';

@@ -1,6 +1,7 @@
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
 import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
-import { ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
+import type { ReactNode } from 'react';
 import { AuthProvider, FirebaseAppProvider, FunctionsProvider, useFirebaseApp } from 'reactfire';
 
 import { firebaseConfig } from 'firebaseConfig';

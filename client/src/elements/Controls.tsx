@@ -1,5 +1,6 @@
 import { WrongLocationRounded } from '@mui/icons-material';
-import { Button, Stack, StackProps } from '@mui/material';
+import { Button, Stack } from '@mui/material';
+import type { StackProps } from '@mui/material';
 import { useCallback } from 'react';
 
 import { useFilterStore, useLocationStore } from 'context';

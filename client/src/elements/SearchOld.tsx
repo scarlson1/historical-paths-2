@@ -11,7 +11,8 @@ import { useLocationStore } from 'context';
 // import throttle from 'lodash/throttle';
 import { LocationOnRounded } from '@mui/icons-material';
 import parse from 'autosuggest-highlight/parse';
-import { SyntheticEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { SyntheticEvent } from 'react';
 import toast from 'react-hot-toast';
 
 // TODO: use library ?? https://github.com/googlemaps/js-api-loader

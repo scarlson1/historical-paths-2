@@ -1,5 +1,6 @@
-import { Functions, httpsCallable } from 'firebase/functions';
-import { Coordinates, EventYears, InitialEvent } from 'types';
+import { httpsCallable } from 'firebase/functions';
+import type { Functions } from 'firebase/functions';
+import type { Coordinates, EventYears, InitialEvent } from 'types';
 
 export type GetEventsRequest = Coordinates;
 export interface GetEventsResponse {

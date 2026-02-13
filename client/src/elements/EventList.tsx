@@ -2,7 +2,7 @@ import { Box, Chip, List, ListItem, ListItemSecondaryAction, Typography } from '
 import { capitalize } from 'lodash';
 import { useMemo } from 'react';
 
-import { GetEventsResponse } from 'api';
+import type { GetEventsResponse } from 'api';
 import { useLocationStore } from 'context';
 
 export function EventList({

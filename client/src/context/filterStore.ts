@@ -1,6 +1,7 @@
 import z from 'zod';
 import { create } from 'zustand';
-import { StateStorage, createJSONStorage, persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import type { StateStorage } from 'zustand/middleware';
 
 import { MAX_YEAR, MIN_YEAR } from '../constants';
 

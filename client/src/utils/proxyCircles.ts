@@ -1,7 +1,7 @@
 // import { Position } from 'deck.gl';
 import { z } from 'zod';
 
-import { Coordinates } from 'types';
+import type { Coordinates } from 'types';
 
 export const proxyCircle = z.object({
   coordinates: z.array(z.number()).min(2).max(3), // missing Float32/64Array types

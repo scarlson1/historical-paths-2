@@ -1,5 +1,6 @@
 import { ArrowDropDownRounded } from '@mui/icons-material';
-import { ThemeOptions, alpha, experimental_extendTheme as extendTheme } from '@mui/material/styles';
+import { alpha, experimental_extendTheme as extendTheme } from '@mui/material/styles';
+import type { ThemeOptions } from '@mui/material/styles';
 import type {} from '@mui/material/themeCssVarsAugmentation';
 // import type {} from '@mui/x-date-pickers/themeAugmentation';
 

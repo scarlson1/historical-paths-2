@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
-import { PickingInfo } from 'deck.gl';
-import { ReactNode } from 'react';
+import type { PickingInfo } from 'deck.gl';
+import type { ReactNode } from 'react';
 
 interface HoverInfoProps {
   pickingInfo?: PickingInfo | null | undefined;

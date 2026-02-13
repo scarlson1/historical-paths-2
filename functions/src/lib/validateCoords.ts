@@ -1,4 +1,4 @@
-import { GeoPoint } from 'firebase-admin/firestore';
+import type { GeoPoint } from 'firebase-admin/firestore';
 import { isFinite } from 'lodash-es';
 import { verify } from './validate.js';
 

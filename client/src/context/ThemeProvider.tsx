@@ -2,10 +2,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {
   Experimental_CssVarsProvider as CssVarsProvider,
   experimental_extendTheme as extendTheme,
-  PaletteColorOptions,
 } from '@mui/material/styles';
 import { deepmerge } from '@mui/utils';
-import * as React from 'react';
+import type { PaletteColorOptions } from '@mui/material/styles';
+import type { ReactNode } from 'react';
 
 import { getDesignTokens, getThemedComponents } from './theme';
 
@@ -65,7 +65,7 @@ const theme = extendTheme({
   ...getThemedComponents(),
 });
 
-export default function ThemeContext(props: { children: React.ReactNode }) {
+export default function ThemeContext(props: { children: ReactNode }) {
   const { children } = props;
   return (
     <CssVarsProvider theme={theme} defaultMode='system' disableTransitionOnChange>

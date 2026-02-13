@@ -34,7 +34,7 @@ Search by:
 
 ## :technologist: Development
 
-**Firebase functions**
+**Start Firebase functions locally**
 
 ```bash
 cd functions & npm install
@@ -52,7 +52,7 @@ To switch between projects, use [firebase alias](https://firebase.google.com/doc
 firebase use [alias]
 ```
 
-**React**
+**Start React locally**
 
 ```bash
 cd client & npm run dev
@@ -146,6 +146,11 @@ The `INVERTED INDEX`
 TODO: consider (tuning index)[https://www.cockroachlabs.com/docs/stable/spatial-indexes#index-tuning-parameters] (doesn't require extremely accurate location in query)
 
 `sid`, `year`, `iso_time`, `usa_sshs` are used in the query and all indexed as well.
+
+Spacial Links
+
+- [Cockroach DB spatial overview](https://www.cockroachlabs.com/docs/v26.1/spatial-data-overview)
+- [Spatial tutorial](https://www.cockroachlabs.com/docs/v26.1/spatial-tutorial)
 
 **Events Query**
 
@@ -304,6 +309,16 @@ WITH hurricanes AS (
 
 SELECT * FROM hurricanes ORDER BY year ASC
 ```
+
+### React
+
+TODO: react structure / stack
+
+- ReactQuery
+- Zustand
+- Mapbox
+- DeckGL
+- MUI
 
 ## :rocket: Deployment
 

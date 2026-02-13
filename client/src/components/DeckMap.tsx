@@ -1,7 +1,8 @@
 import { Box, useTheme } from '@mui/material';
-import { DeckGL, DeckGLProps, LayersList, PickingInfo } from 'deck.gl';
+import { DeckGL } from 'deck.gl';
+import type { DeckGLProps, LayersList, PickingInfo } from 'deck.gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import Map from 'react-map-gl';
 
 import { MAPBOX_DARK, MAPBOX_LIGHT, MapTooltip } from 'components';

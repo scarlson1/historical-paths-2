@@ -1,5 +1,6 @@
 import { DarkModeRounded, LightModeRounded } from '@mui/icons-material';
-import { Box, Button, ButtonProps, useColorScheme } from '@mui/material';
+import { Box, Button, useColorScheme } from '@mui/material';
+import type { ButtonProps } from '@mui/material';
 
 // type ThemeButtonProps = Omit<IconButtonProps, 'onClick'>;
 

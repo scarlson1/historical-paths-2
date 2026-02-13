@@ -1,4 +1,5 @@
-import { Functions, httpsCallable } from 'firebase/functions';
+import { httpsCallable } from 'firebase/functions';
+import type { Functions } from 'firebase/functions';
 
 export interface GetLastEventResponse {
   // [key: string]: any;

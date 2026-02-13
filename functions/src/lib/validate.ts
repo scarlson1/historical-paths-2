@@ -1,5 +1,5 @@
 import { HttpsError } from 'firebase-functions/v1/auth';
-import { FunctionsErrorCode } from 'firebase-functions/v1/https';
+import type { FunctionsErrorCode } from 'firebase-functions/v1/https';
 import invariant from 'tiny-invariant';
 
 // throw firebase function error

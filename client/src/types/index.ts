@@ -1,4 +1,4 @@
-import { Position } from 'deck.gl';
+import type { Position } from 'deck.gl';
 
 export interface Coordinates {
   latitude: number;
@@ -13,9 +13,9 @@ export interface EventYears {
 
 export interface EventProfile {
   name: string;
-  year: number; // actually a string ??
+  year: number;
   id: string;
-  category: number; // actually a string ??
+  category: number;
 }
 
 export interface AbbrCoord {
