@@ -17,7 +17,7 @@ Data source: [NOAA International Best Track Archive for Climate Stewardship (IBT
 
 ### Pipeline
 
-Kestra data pipeline is run monthly to update Cockroach DB with data from NOAA. The data is filtered to North Atlantic and Western Pacific basins and events that achieved a minimum usa_sshs of 0.
+Kestra data pipeline is run monthly to update Cockroach DB with data from NOAA. The data is filtered to North Atlantic and Western Pacific basins and events that reached a minimum usa_sshs of 0.
 
 :jigsaw: [noaa-hurricanes-pipeline repo](https://github.com/scarlson1/noaa-hurricanes-pipeline)
 
@@ -42,7 +42,7 @@ cd functions & npm install
 npm run dev
 ```
 
-- sets service account path as env var (`export GOOGLE_APPLICATION_CREDENTIALS=[PATH_TO_SERVICE_ACCOUNT].json`)
+- sets service account path as env var - from path set in package.json (`export GOOGLE_APPLICATION_CREDENTIALS=[PATH_TO_SERVICE_ACCOUNT].json`)
 - `firebase emulators:start --only functions,auth`
 - `tsc --watch`
 
@@ -72,7 +72,7 @@ Firebase functions env vars
 - `DB_DATABASE`
 - `DB_PORT`
 
-GCP Secret Manager or .env.local
+GCP Secret Manager or `.env.local`
 
 - `DB_PASSWORD`
 
@@ -91,8 +91,6 @@ React env vars
 
 - `VITE_GOOGLE_GEO_KEY` (for search)
 - `VITE_MAPBOX_ACCESS_TOKEN` (for map)
-
----
 
 ## :file_cabinet: Cockroach DB
 
@@ -128,26 +126,22 @@ INVERTED INDEX geog_idx_1 ("geography"),
 UNIQUE INDEX unique_row (unique_row_id ASC)
 ```
 
-**(Computed columns)[https://www.cockroachlabs.com/docs/stable/computed-columns]**: point_id, rowid, geometry, geography
+**[Computed columns](https://www.cockroachlabs.com/docs/stable/computed-columns)**: point_id, rowid, geometry, geography
 
 - computed columns cannot be written to directly
 - `STORED`: computed when the data is added/updated and stored within the table
 
 **Spatial Indexes**
 
-(CockroachDB spatial index docs)[https://www.cockroachlabs.com/docs/stable/spatial-indexes]
+[CockroachDB spatial index docs](https://www.cockroachlabs.com/docs/stable/spatial-indexes)
 
-Indexing Spatial indexes operate on 2-dimensional data types (`GEOMETRY` & `GEOGRAPHY`). They're stored as a special type of (GIN index)[https://www.cockroachlabs.com/docs/v26.1/inverted-indexes].
+Indexing Spatial indexes operate on 2-dimensional data types (`GEOMETRY` & `GEOGRAPHY`). They're stored as a special type of [GIN index](https://www.cockroachlabs.com/docs/v26.1/inverted-indexes).
 
 The geometry/geography are automatically calculated by Cockroach from the latitude and longitude columns.
 
-The `INVERTED INDEX`
-
-TODO: consider (tuning index)[https://www.cockroachlabs.com/docs/stable/spatial-indexes#index-tuning-parameters] (doesn't require extremely accurate location in query)
-
 `sid`, `year`, `iso_time`, `usa_sshs` are used in the query and all indexed as well.
 
-Spacial Links
+Resource Links
 
 - [Cockroach DB spatial overview](https://www.cockroachlabs.com/docs/v26.1/spatial-data-overview)
 - [Spatial tutorial](https://www.cockroachlabs.com/docs/v26.1/spatial-tutorial)
@@ -177,14 +171,15 @@ interface EventProfile {
     name: string;
   }[];
 }
+[];
 ```
 
 The response is enriched with:
 
-- triggerCategory: maximum category event registered within the radius (outlined above - radius is category dependent) of the location
+- triggerCategory: maximum category the event registered within the radius (outlined above - radius is category dependent) of the location
 - summary by category/year (tropical storm, minor hurricane, major hurricane)
 
-Query:
+**SQL Query**
 
 Inner Query:
 
@@ -196,12 +191,13 @@ Inner Query:
 
 ```sql
 WHERE
+  -- 80467 meters = 50 miles
   sid IN (
     SELECT sid
     FROM hurricane_data
     WHERE
       usa_sshs IN (0)
-      AND ST_DWithin (ST_GeographyFromText('POINT(${lng} ${lat})'), geography, 80467) -- 80467 meters = 50 miles
+      AND ST_DWithin (ST_GeographyFromText('POINT(${lng} ${lat})'), geography, 80467)
   )
   OR sid in ... -- category 1-2 within 100 miles
   OR sid in ... -- category 3-4  within 125 miles
@@ -237,10 +233,15 @@ WITH hurricanes AS (
   FROM hurricane_data
 ```
 
-Return events:
+Filter to last 50 years and return events:
 
 ```sql
-SELECT * FROM hurricanes ORDER BY year ASC
+SELECT
+  *
+FROM hurricanes
+WHERE
+  year BETWEEN DATE_PART('YEAR', NOW() - INTERVAL '50 YEAR') AND DATE_PART('YEAR', NOW())
+ORDER BY year ASC
 ```
 
 Full Query:
@@ -307,18 +308,23 @@ WITH hurricanes AS (
     GROUP BY sid
   )
 
-SELECT * FROM hurricanes ORDER BY year ASC
+SELECT
+  *
+FROM hurricanes
+WHERE
+  year BETWEEN DATE_PART('YEAR', NOW() - INTERVAL '50 YEAR') AND DATE_PART('YEAR', NOW())
+ORDER BY year ASC
 ```
 
-### React
+### :atom_symbol: React
 
-TODO: react structure / stack
-
-- ReactQuery
-- Zustand
-- Mapbox
-- DeckGL
-- MUI
+- [ReactQuery](https://tanstack.com/query/latest?gad_source=1&gad_campaignid=23425110936&gbraid=0AAAABCePxPf74lRCOwyUezNtFOghwwCo0) - cache events
+- [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - state & sync location query with URL
+- [Mapbox](https://www.mapbox.com/) - display map
+- [DeckGL](https://deck.gl/docs) - render data on map
+- [MUI](https://mui.com/) - components & styling
+- [Vite] (https://vite.dev/) - dev/build tooling
+- [Google Places](https://developers.google.com/maps/documentation/places/web-service/legacy/search) - search
 
 ## :rocket: Deployment
 
@@ -326,7 +332,7 @@ TODO: react structure / stack
 
 ```bash
 cd functions
-npm run deploy:dev # or npm run deploy:prod
+npm run deploy:prod # or npm run deploy:dev
 # firebase use dev
 # vite build
 # firebase deploy --only hosting
@@ -335,6 +341,7 @@ npm run deploy:dev # or npm run deploy:prod
 **Firebase functions**
 
 ```bash
+# optionally set project: firebase use [alias]
 npm run build # rm -rf ./dist/ && tsc
 npm run deploy # firebase deploy --only functions
 ```
