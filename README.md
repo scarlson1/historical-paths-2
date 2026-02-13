@@ -31,8 +31,78 @@ TODO
 
 ### Development
 
-TODO
+**Firebase functions**
+
+```bash
+cd functions & npm install
+# start function emulators
+npm run dev
+```
+
+- sets service account path as env var (`export GOOGLE_APPLICATION_CREDENTIALS=[PATH_TO_SERVICE_ACCOUNT].json`)
+- `firebase emulators:start --only functions,auth`
+- `tsc --watch`
+
+To switch between projects, use (firebase alias)[https://firebase.google.com/docs/cli#project_aliases]
+
+```bash
+firebase use [alias]
+```
+
+**React**
+
+```bash
+cd client & npm run dev
+# same as: vite --mode development
+```
+
+**Env Vars**
+
+Firebase functions env vars
+
+`.env.[project]`
+
+- `DB_USER`
+- `DB_HOST`
+- `DB_DATABASE`
+- `AUDIENCE`
+- `DB_PORT`
+
+GCP Secret Manager or .env.local
+
+- `DB_PASSWORD`
+
+React env vars
+
+`.env`
+
+- `VITE_FB_API_KEY`
+- `VITE_FB_AUTH_DOMAIN`
+- `VITE_FB_PROJECT_ID`
+- `VITE_FB_STORAGE_BUCKET`
+- `VITE_FB_MESSAGING_SENDER_ID`
+- `VITE_FB_APP_ID`
+
+`.env.local` / `.env.prod`
+
+- `VITE_GOOGLE_GEO_KEY`
+- `VITE_MAPBOX_ACCESS_TOKEN`
 
 ### Deployment
 
-TODO
+**Client**
+
+```bash
+cd functions
+npm run deploy:dev # or npm run deploy:prod
+# firebase use dev
+# vite build
+# firebase deploy --only hosting
+```
+
+**Firebase functions**
+
+```bash
+npm run build # rm -rf ./dist/ && tsc
+npm run deploy # firebase deploy --only functions
+```
