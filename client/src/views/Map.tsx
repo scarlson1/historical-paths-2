@@ -200,10 +200,12 @@ export const Map = ({ children, ...props }: MapProps) => {
     new PathLayer({
       id: 'paths-layer',
       data: data?.events || [],
-      getColor: palette.mode === 'dark' ? [180, 180, 180, 255] : [0, 0, 0, 255],
+      getColor:
+        palette.mode === 'dark' ? [180, 180, 180, 255] : [111, 126, 140, 255], //[62, 80, 96, 255], // [0, 0, 0, 255],
       highlightedObjectIndex: highlightedIndex,
       // @ts-expect-error deckGL bug ??
       onHover: (info) => {
+        console.log('hover path: ', info);
         setHoverInfo(info);
         setHighlightedIndex(info.index);
       },
@@ -236,6 +238,7 @@ export const Map = ({ children, ...props }: MapProps) => {
   const getTooltip = useCallback(
     ({ object }: PickingInfo<TrackDataPoint & { details?: string }>) => {
       if (!object?.name) return null;
+      console.log(object);
 
       return (
         <Box sx={{ maxWidth: 280, whiteSpace: 'normal' }}>

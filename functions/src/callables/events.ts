@@ -35,10 +35,6 @@ const events = async ({ data }: CallableRequest<EventsRequest>) => {
     console.log('Fetching events...');
     const { query } = getDB(dbPassword.value());
     const { rows } = await query<InitialEvent>(queryString);
-    // rows.forEach((r) => {
-    //   console.log('ROW: ', r.id);
-    // });
-
     // temp fix: query returns years and category as strings
     const numberFixEvents = rows.map((e) => ({
       ...e,
@@ -109,7 +105,8 @@ const getQueryString = ({ lat, lng }: { lat: number; lng: number }) => {
   // queryString += ` OR sid IN (SELECT sid FROM hurricane_data WHERE usa_sshs IN (5) AND ST_DWithin(ST_GeomFromText('POINT(${lng} ${lat})'), geometry, 241402))`;
 
   queryString += ' GROUP BY sid)';
-  queryString += ' SELECT * FROM hurricanes ORDER BY year ASC';
+  queryString +=
+    " SELECT * FROM hurricanes WHERE year BETWEEN DATE_PART('YEAR', NOW() - INTERVAL '50 YEAR') AND DATE_PART('YEAR', NOW()) ORDER BY year ASC";
 
   return queryString;
 };
